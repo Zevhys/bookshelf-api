@@ -17,6 +17,10 @@
   ],
   "author": "Zevhys",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Zevhys/bookshelf-api"
+  },
   "dependencies": {
     "@hapi/hapi": "^21.3.12",
     "nanoid": "^3.3.8"
