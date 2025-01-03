@@ -81,39 +81,14 @@ const getAllBooksHandler = (request, h) => {
 
   if (name) {
     const filteredName = books.filter((book) => {
-      const regex = new RegExp("name", "i");
+      const regex = new RegExp(name, "i");
       return regex.test(book.name);
     });
-    const response = h.response({
-      status: "success",
-      data: {
-        books: filteredName.map(({ id, name, publisher }) => ({
-          id,
-          name,
-          publisher,
-        })),
-      },
-    });
-    response.code(200);
-    return response;
-  }
-
-  if (reading) {
-    let filteredBook;
-
-    if (reading === "1") {
-      filteredBook = books.filter((book) => book.reading === true);
-    } else if (reading === "0") {
-      filteredBook = books.filter((book) => book.reading === false);
-    } else {
-      filteredBook = books;
-    }
-
     return h
       .response({
         status: "success",
         data: {
-          books: filteredBook.map(({ id, name, publisher }) => ({
+          books: filteredName.map(({ id, name, publisher }) => ({
             id,
             name,
             publisher,
@@ -125,17 +100,11 @@ const getAllBooksHandler = (request, h) => {
 
   if (reading || finished) {
     const filterKey = reading ? "reading" : "finished";
-    const filterValue = reading ? reading : finished;
+    const filterValue = reading || finished;
 
-    let filteredBook;
-
-    if (filterValue === "1") {
-      filteredBook = books.filter((book) => book[filterKey] === true);
-    } else if (filterValue === "0") {
-      filteredBook = books.filter((book) => book[filterKey] === false);
-    } else {
-      filteredBook = books;
-    }
+    const filteredBook = books.filter((book) =>
+      filterValue === "1" ? book[filterKey] === true : book[filterKey] === false
+    );
 
     return h
       .response({
@@ -151,18 +120,18 @@ const getAllBooksHandler = (request, h) => {
       .code(200);
   }
 
-  const response = h.response({
-    status: "success",
-    data: {
-      books: books.map(({ id, name, publisher }) => ({
-        id,
-        name,
-        publisher,
-      })),
-    },
-  });
-  response.code(200);
-  return response;
+  return h
+    .response({
+      status: "success",
+      data: {
+        books: books.map(({ id, name, publisher }) => ({
+          id,
+          name,
+          publisher,
+        })),
+      },
+    })
+    .code(200);
 };
 
 const getBookByIdHandler = (request, h) => {
