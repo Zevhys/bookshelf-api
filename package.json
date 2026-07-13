@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@hapi/hapi": "^21.3.12",
-    "nanoid": "^5.0.9"
+    "nanoid": "^6.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
